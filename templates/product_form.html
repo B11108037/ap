@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>{% if product %}編輯商品{% else %}新增商品{% endif %}</h2>
+<form method="POST">
+    <label for="title">商品標題:</label>
+    <input type="text" name="title" value="{{ product.title if product else '' }}" required>
+    <label for="size">尺寸:</label>
+    <input type="text" name="size" value="{{ product.size if product else '' }}">
+    <label for="content">內含物:</label>
+    <input type="text" name="content" value="{{ product.content if product else '' }}">
+    <button type="submit">儲存</button>
+</form>
+<a href="{{ url_for('index') }}">取消</a>
+{% endblock %}
