@@ -26,11 +26,16 @@ def posts():
 def about():
     return render_template('about.html')
 
-# RESTful API - 新增商品
 @app.route('/api/products', methods=['POST'])
 def create_product():
     data = request.json
-    new_product = Product(title=data['title'], size=data.get('size'), content=data.get('content'))
+    if not data or 'title' not in data:
+        return jsonify({'error': 'Missing required fields'}), 400
+    new_product = Product(
+        title=data['title'],
+        size=data.get('size', ''),
+        content=data.get('content', '')
+    )
     db.session.add(new_product)
     db.session.commit()
     return jsonify(new_product.to_dict()), 201
